@@ -23,7 +23,7 @@ LEMP Stack is a combination of four open-source technologies that are used in we
 
 ## Components of LEMP Stack:
 
-### 1- NGINX:
+### NGINX:
 Nginx is open source software that powers web servers and enables reverse proxying, caching, load balancing, and media streaming.
 
 #### The basics of NGINX configuration
