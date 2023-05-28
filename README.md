@@ -1,142 +1,80 @@
-# Deploying-lempstack(Linux, Nginx, MySQL, PHP)-on-ubuntu 20.04, and take daily backup
 
-## Step 1 – Installing the Nginx Web Server
-sudo apt update
+# LEMP stack on AWS:
+LEMP Stack is a combination of four open-source technologies that are used in web development. These technologies include:
 
-sudo apt install nginx
+- Linux: The operating system that runs the web server.
 
-Go to your browser and type your IP addr or domain_name http://server_domain_or_IP
+- Nginx: The web server software that handles HTTP requests.
 
+- MySQL: The relational database management system that stores the website’s data.
 
-## Step 2 — Installing MySQL
+- PHP: The programming language used to build dynamic web applications.
 
-#### Now that you have a web server up and running, you need to install the database system to be able to store and manage data for your site.
+## Why is the LEMP Stack popular in web development?
 
-sudo apt install mysql-server
+- High performance: Nginx is known for its high performance, making it an excellent choice for handling large amounts of traffic.
+- Scalability: The LEMP stack is highly scalable, making it a good choice for websites that need to handle a large volume of traffic.
+- Open-source: All of the components of the LEMP stack are open-source, making it cost-effective for web developers.
+- Flexibility: The LEMP stack is flexible and can be customized to fit the specific needs of a website.
+- Security: The LEMP stack is known for its security, with Nginx providing several security features, such as SSL encryption and DDoS protection.
 
-#### Start the interactive script by running:
+## LEMP stack (On_Cloud) diagram:
+![LEMP diagram](LEMP diagram.PNG)
 
-sudo mysql_secure_installation
+## Components of LEMP Stack:
 
-After entering your Password If it didn't work there're 2 solutions to do:
-- First: enter this command to ensure that we pass the correct credentials when connecting to MySQL:
+### 1- NGINX:
+Nginx is open source software that powers web servers and enables reverse proxying, caching, load balancing, and media streaming.
 
-mysql -uhomer -pStrongPwd
+#### The basics of NGINX configuration
+NGINX configuration is typically done using a configuration file "nginx.conf" and is located in the NGINX installation directory.
 
-- Second: Set the password for the root user:
+- The main configuration file /etc/nginx/nginx.conf
 
-ALTER USER 'root'@'localhost' IDENTIFIED BY 'StrongPwd';
+- The log files are located in /var/log/nginx
 
-Then test if you’re able to log in to the MySQL console:
+- Under this directory we will find two files: access.log, error.log
 
-sudo mysql
+- You can check the syntax of it before restarting the server by running: nginx –t
 
-then exit after test
+- You can get more info about nginx by: nginx  -h
 
-## Step 3 – Installing PHP
-#### To install the php-fpm and php-mysql packages, run:
+### MySQL: 
+It is an open-source SQL-based database that is used to store data and manipulate data while maintaining data consistency and integrity. It organizes data in tabular form in rows and columns.
 
-sudo apt install php-fpm php-mysql
+#### Why use MySQL?
 
-## Step 4 — Configuring Nginx to Use the PHP Processor
-1- Create the root web directory for your_domain as follows:
+- It is Open-source.
+- Strong data protection.
+- Highly extensible
+- High performance.
+- Scalability and Flexibility
 
-sudo mkdir /var/www/devops.in(my_domain)
+#### Find MySQL the configuration files in:
+- /etc/my.cnf
+- /etc/mysql/my.cnf
+- /usr/sbin/mysqld --help --verbose
+Log files:
+- /var/log/mysql
+If you don’t find the MySQL logs in the default directory, check the MySQL configuration:
+- log_error = /var/log/mysql/error.log
 
-2- Next, assign ownership of the directory
+### PHP: 
+It stands for Hypertext Preprocessor and is a scripting language that works on the server-side and communicates with the database MySQL and does all operations which the user requests like fetching data, adding data, or manipulating data, or processing the data.
 
-sudo chown -R $USER:$USER /var/www/devops.in
+#### Why use PHP?
 
-3- Then, open a new configuration file in Nginx’s sites-available directory
+- Large community support.
+- More options for database connectivity.
+- Inexpensive web hosting.
+- Open-source and free.
+- The most popular CMS WordPress runs on PHP.
 
-sudo vim /etc/nginx/sites-available/devops.in
+#### Configuration file for PHP:
+- /etc/php/8.1/fpm/php.ini
+- /var/www/html/phpinfo.php
 
-4- Activate your configuration by linking to the config file from Nginx’s sites-enabled directory:
+![LEMP](lemp.png)
 
-sudo ln -s /etc/nginx/sites-available/devops.in /etc/nginx/sites-enabled/
-
-5- Then, unlink the default configuration file from the /sites-enabled/ directory:
-
-sudo unlink /etc/nginx/sites-enabled/default
-
-6- Test your configuration for syntax errors by typing:
-
-sudo nginx -t
-
-7- Reload Nginx to apply the changes:
-
-sudo systemctl reload nginx
-
-8- Create an index.html file in that location to test that your new server block works as expected:
-
-nano /var/www/devops.in/index.html
-
-9- Now go to your browser and access your server’s domain name or IP address:
-
-http://server_domain_or_IP
-
-![Hello_World](nginx.PNG)
-
-## Step 5 –Testing PHP with Nginx
-1- creating a test PHP file in your document root called info.php
-
-vim /var/www/devops.in/info.php
-
-2- You can now access this page in your web browser
-
-http://server_domain_or_IP/info.php
-
-![PHP_Test](PHP.PNG)
-
-## Step 6 — Testing Database Connection from PHP 
-
-1- Connect to the MySQL console using the root account:
-
-sudo mysql -uroot -p
-
-CREATE DATABASE fawry_internship;
-
-CREATE USER 'example_user'@'%' IDENTIFIED WITH mysql_native_password BY 'password';
-
-GRANT ALL ON example_database.* TO 'example_user'@'%';
-
-INSERT INTO fawry_internship.todo_list (content) VALUES ("My first important item");
-
-#### To confirm that the data was successfully saved to your table, run:
-
-SELECT * FROM fawry_internship.todo_list;
-
-exit
-
-#### Create the PHP script that will connect to MySQL and query for your content.
-
-vim /var/www/devops.in/todo_list.php
-
-
-#### now access this page in your web browser by visiting the domain name or public IP address, followed by /todo_list.php:
-
-http://server_domain_or_IP/todo_list.php
-
-![To_do_list](to_do_list.PNG)
-
-## step 7 - Take daily Backup:
-
-1- Write script for daily backup you'll find the script just Edit the configuration options at the beginning of the script to match your environment.
-
-2- Make the script executable
-
-chmod +x backup-mysql.sh
-
-3- Run the script.
-
-./backup-mysql.sh
-
-4- Setup a cronjob to run the script daily/weekly if you choose.
-
-5 1   * * * /etc/backup-mysql.sh >/dev/null 2>&1
-
-
-
-
-
+![LEMP](LEMP.gif)
 

@@ -2,6 +2,7 @@
 #----------------------------------------
 # OPTIONS
 #----------------------------------------
+now=$(date +%d%m%Y-%H:%M:%S)
 USER='mysql-username'       # MySQL User
 PASSWORD='mysql-password' # MySQL Password
 DAYS_TO_KEEP=5    # 0 to keep forever
@@ -39,3 +40,5 @@ if [ "$DAYS_TO_KEEP" -gt 0 ] ; then
   echo "Deleting backups older than $DAYS_TO_KEEP days"
   find $BACKUP_PATH/* -mtime +$DAYS_TO_KEEP -exec rm {} \;
 fi
+
+echo "Hi, Your database backup for date $backupfilename is ready" | mutt -a /backup/backup$backupfilename.zip -s "Database Backup - $backupfilename" -- zeinabmamdouh2021@gmail.com
