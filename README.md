@@ -19,7 +19,7 @@ LEMP Stack is a combination of four open-source technologies that are used in we
 - Security: The LEMP stack is known for its security, with Nginx providing several security features, such as SSL encryption and DDoS protection.
 
 ## LEMP stack (On_Cloud) diagram:
-![LEMP diagram](LEMP diagram.PNG)
+![LEMP diagram](LEMP-diagram.PNG)
 
 ## Components of LEMP Stack:
 
