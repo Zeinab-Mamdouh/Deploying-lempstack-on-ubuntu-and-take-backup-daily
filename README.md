@@ -56,6 +56,7 @@ It is an open-source SQL-based database that is used to store data and manipulat
 - /usr/sbin/mysqld --help --verbose
 Log files:
 - /var/log/mysql
+
 If you don’t find the MySQL logs in the default directory, check the MySQL configuration:
 - log_error = /var/log/mysql/error.log
 
@@ -70,7 +71,7 @@ It stands for Hypertext Preprocessor and is a scripting language that works on t
 - Open-source and free.
 - The most popular CMS WordPress runs on PHP.
 
-#### Configuration file for PHP:
+#### Configuration files for PHP:
 - /etc/php/8.1/fpm/php.ini
 - /var/www/html/phpinfo.php
 
